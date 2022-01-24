@@ -12,6 +12,6 @@ This repository will provide a client for the Debug Adapter implementation for A
   - Select `launch a Debug Server using the following arguments`
   - in `command` field, set `java`
   - in `Arguments` field, set `-jar <pathTo>/camel-dap-server-xxx.jar`
-  - in `Launch Parameters (Json)` field, set { "attach_pid": "<thePidOfTheCamelApplication>"}
+  - in `Launch Parameters (Json)` field, set { "request": "attach", "attach_pid": "<thePidOfTheCamelApplication>"}
   - Click `Debug`
 - You can now set breakpoints in textual Camel route definition
