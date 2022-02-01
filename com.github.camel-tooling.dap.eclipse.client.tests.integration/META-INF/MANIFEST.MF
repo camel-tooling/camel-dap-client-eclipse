@@ -1,0 +1,13 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: %Bundle-Name
+Bundle-SymbolicName: com.github.camel-tooling.dap.eclipse.client.tests.integration;singleton:=true
+Bundle-Version: 0.0.1.qualifier
+Bundle-Vendor: %Bundle-Vendor
+Bundle-RequiredExecutionEnvironment: JavaSE-11
+Bundle-ActivationPolicy: lazy
+Require-Bundle: org.junit;bundle-version="4.13.0",
+ org.assertj;bundle-version="3.20.2",
+ org.eclipse.lsp4e.debug;bundle-version="0.13.1",
+ org.eclipse.ui;bundle-version="3.112.0",
+ com.github.camel-tooling.dap.eclipse.client;bundle-version="0.0.1"
