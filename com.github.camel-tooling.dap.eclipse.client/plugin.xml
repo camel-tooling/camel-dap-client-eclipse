@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.debug.core.launchConfigurationTypes">
+      <launchConfigurationType
+            delegate="com.github.cameltooling.dap.eclipse.client.CamelDSPLaunchDelegate"
+            id="com.github.camel-tooling.dap.eclipse.client.launchConfigurationType"
+            modes="debug"
+            name="Camel Textual Debug">
+      </launchConfigurationType>
+   </extension>
+   <extension
+         point="org.eclipse.debug.ui.launchConfigurationTabGroups">
+      <launchConfigurationTabGroup
+            class="com.github.cameltooling.dap.eclipse.client.CameltextualDebugLaunchConfigurationTabGroup"
+            id="com.github.camel-tooling.dap.eclipse.client.launchConfigurationTabGroup"
+            type="com.github.camel-tooling.dap.eclipse.client.launchConfigurationType">
+      </launchConfigurationTabGroup>
+   </extension>
+ </plugin>

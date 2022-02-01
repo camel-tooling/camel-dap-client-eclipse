@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site>
+   <feature url="features/com.github.cameltooling.dap.eclipse.client.feature_0.0.1.qualifier.jar" id="com.github.cameltooling.dap.eclipse.client.feature" version="0.0.1.qualifier">
+      <category name="com.github.cameltooling.dap.updatesite.category"/>
+   </feature>
+   <category-def name="com.github.cameltooling.dap.updatesite.category" label="Debug Tooling for Apache Camel">
+      <description>
+         Provides launch configuration to debug Camel routes
+      </description>
+   </category-def>
+</site>
