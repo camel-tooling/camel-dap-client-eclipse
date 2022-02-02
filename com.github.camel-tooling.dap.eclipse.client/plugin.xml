@@ -18,4 +18,12 @@
             type="com.github.camel-tooling.dap.eclipse.client.launchConfigurationType">
       </launchConfigurationTabGroup>
    </extension>
+   <extension
+         point="org.eclipse.debug.ui.launchConfigurationTypeImages">
+      <launchConfigurationTypeImage
+            configTypeID="com.github.camel-tooling.dap.eclipse.client.launchConfigurationType"
+            icon="icons/camel.png"
+            id="com.github.camel-tooling.dap.eclipse.client.launchConfigurationTypeImage">
+      </launchConfigurationTypeImage>
+   </extension>
  </plugin>
