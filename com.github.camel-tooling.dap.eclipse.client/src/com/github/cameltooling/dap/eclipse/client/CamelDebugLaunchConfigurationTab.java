@@ -75,19 +75,15 @@ public class CamelDebugLaunchConfigurationTab extends AbstractLaunchConfiguratio
 	public void createControl(Composite parent) {
 		Composite comp = new Composite(parent, SWT.NONE);
 		setControl(comp);
-		comp.setLayout(new GridLayout(2, true));
+		comp.setLayout(new GridLayout(1, true));
 		comp.setFont(parent.getFont());
 		
 		Label description = new Label(comp, SWT.NONE);
 		description.setText("Arguments provided when initializing the Camel Debug Adapter. It is a JSON string.");
-		description.setLayoutData(GridDataFactory.fillDefaults().span(2, 1).create());
-		
-		Label pidLabel = new Label(comp, SWT.NONE);
-		pidLabel.setText("Start arguments");
-		pidLabel.setToolTipText("Arguments provided when initializing the Camel Debug Adapter.");
-		
+		description.setLayoutData(GridDataFactory.fillDefaults().create());
+			
 		startArgumentsText = new Text(comp, SWT.BORDER | SWT.MULTI);
-		startArgumentsText.setLayoutData(GridDataFactory.fillDefaults().create());
+		startArgumentsText.setLayoutData(GridDataFactory.fillDefaults().grab(true, true).create());
 		startArgumentsText.setText(DEFAULT_JSON_LAUNCH_ARGS);
 		startArgumentsText.addModifyListener(e -> updateLaunchConfigurationDialog());
 	}
