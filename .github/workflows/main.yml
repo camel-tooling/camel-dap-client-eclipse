@@ -5,7 +5,7 @@ name: Build
 
 on:
   push:
-    branches: [ main ]
+    branches: [ main, FUSETOOLS2-1473-sonarAnalysis ]
   pull_request:
     branches: [ main ]
 
@@ -41,4 +41,4 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
       run: mvn -B org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=camel-tooling_camel-dap-client-eclipse
-      if: ${{ github.ref_name == 'main' }}
+      if: ${{ github.ref_name == 'FUSETOOLS2-1473-sonarAnalysis' }}
