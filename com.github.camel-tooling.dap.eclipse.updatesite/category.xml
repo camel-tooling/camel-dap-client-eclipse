@@ -8,4 +8,5 @@
          Provides launch configuration to debug Camel routes
       </description>
    </category-def>
+   <repository-reference location="https://download.eclipse.org/lsp4e/releases/latest" enabled="true" />
 </site>
