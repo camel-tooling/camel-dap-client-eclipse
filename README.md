@@ -1,3 +1,4 @@
+[![Build and Test](https://github.com/camel-tooling/camel-dap-client-eclipse/actions/workflows/main.yml/badge.svg)](https://github.com/camel-tooling/camel-dap-client-eclipse/actions/workflows/main.yml)
 [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=camel-tooling_camel-dap-client-eclipse&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=camel-tooling_camel-dap-client-eclipse)
 [![Drag to your running Eclipse* workspace to install. *Requires Eclipse Marketplace Client](https://marketplace.eclipse.org/sites/all/themes/solstice/public/images/marketplace/btn-install.svg)](http://marketplace.eclipse.org/marketplace-client-intro?mpc_install=5498142 "Drag to your running Eclipse* workspace to install. *Requires Eclipse Marketplace Client")
 
