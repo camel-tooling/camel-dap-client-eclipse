@@ -1,3 +1,5 @@
+[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=camel-tooling_camel-dap-client-eclipse&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=camel-tooling_camel-dap-client-eclipse)
+
 # Camel Debug Adapter client for Eclipse
 
 This repository will provide a client for the Debug Adapter implementation for Apache Camel. As a first step, manual steps are provided to use the Debug Adapter for Apache Camel inside your Eclipse instance.
