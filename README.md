@@ -10,15 +10,25 @@ This repository will provide a client for the Debug Adapter implementation for A
 
 ### Camel Specific Launcher
 
+#### Happy path
+
 The advantage is that a minimal set of information is visible.
 
 - Install extension from this repository
-- Launch the Camel application that you want to debug
-- Grab the pid of the Camel Application
+- Launch the Camel (3.16+) application that you want to debug with `camel-debug` on the classpath
 - Create a `Camel Textual debug` debug configuration
-  - in the text field, add the pid to have something like { "request": "attach", "attach_pid": "1234"}
   - Click `Debug`
 - You can now set breakpoints in textual Camel route definition
+
+#### Advanced configuration
+
+In the `Camel Textual debug` debug configuration, you can provide additional parameters. For instance when trying to connect to a remote JMX URL:
+`{ "request": "attach", "attach_jmx_url":"<aJMXURL>" }`
+
+it is also possible to use the PID of the Camel application:
+
+`{ "request": "attach", "attach_pid":"<pidOfCamelApplication>" }`
+
 
 ### Built-in LSP4E.Debug Launcher
 
@@ -27,11 +37,10 @@ The advantage is that it is giving more power on the actions and the versions to
 - Build the Camel Debug Adapter Jar from this [repo](https://github.com/camel-tooling/camel-debug-adapter) or retrieve it from 
 - Install [Eclipse LSP4E](https://projects.eclipse.org/projects/technology.lsp4e) in your Eclipse Desktop instance
 - Launch the Camel application that you want to debug
-- Grab the pid of the Camel Application
 - Create a `Debug Adapter Launcher` debug configuration
-  - Select `launch a Debug Server using the following arguments`
+  - Select `Launch a Debug Server using the following arguments`
   - in `command` field, set `java`
   - in `Arguments` field, set `-jar <pathTo>/camel-dap-server-xxx.jar`
-  - in `Launch Parameters (Json)` field, set { "request": "attach", "attach_pid": "<thePidOfTheCamelApplication>"}
+  - in `Launch Parameters (Json)` field, set `{ "request": "attach" }`
   - Click `Debug`
 - You can now set breakpoints in textual Camel route definition
