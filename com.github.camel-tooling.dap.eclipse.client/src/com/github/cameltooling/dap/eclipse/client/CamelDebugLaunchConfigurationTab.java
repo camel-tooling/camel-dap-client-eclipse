@@ -35,8 +35,7 @@ import org.eclipse.swt.widgets.Text;
 public class CamelDebugLaunchConfigurationTab extends AbstractLaunchConfigurationTab {
 
 	private static final String DEFAULT_JSON_LAUNCH_ARGS = "{\n"
-			+ "\"request\": \"attach\",\n"
-			+ "\"attach_pid\": \"\"\n"
+			+ "\"request\": \"attach\"\n"
 			+ "}";
 	private Text startArgumentsText;
 
@@ -79,7 +78,7 @@ public class CamelDebugLaunchConfigurationTab extends AbstractLaunchConfiguratio
 		comp.setFont(parent.getFont());
 		
 		Label description = new Label(comp, SWT.NONE);
-		description.setText("Arguments provided when initializing the Camel Debug Adapter. It is a JSON string.");
+		description.setText("Arguments provided when initializing the Camel Debug Adapter. It is a JSON string. Additional possible parameters are attach_jmx_url and attach_pid.");
 		description.setLayoutData(GridDataFactory.fillDefaults().create());
 			
 		startArgumentsText = new Text(comp, SWT.BORDER | SWT.MULTI);
