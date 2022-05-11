@@ -20,6 +20,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.io.File;
 
+import org.eclipse.core.runtime.Platform;
 import org.junit.Test;
 
 import com.github.cameltooling.dap.eclipse.client.CamelDAPJarAcccessor;
@@ -29,6 +30,10 @@ public class CamelDAPJarAccessorIT {
 	@Test
 	public void testFindJar() throws Exception {
 		String path = CamelDAPJarAcccessor.computeCamelDebugAdapterServerJarPath();
+		if (Platform.OS_WIN32.equals(Platform.getOS())) {
+			// This is a dirty workaround in the test as we are passing encapsulated string for windows and not the other OS.
+			path = path.substring(1, path.length() -1);
+		}
 		assertThat(new File(path)).exists();
 	}
 	
