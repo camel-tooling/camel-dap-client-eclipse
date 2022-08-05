@@ -35,6 +35,7 @@
 		<module>com.github.camel-tooling.dap.eclipse.client</module>
 		<module>com.github.cameltooling.dap.eclipse.client.feature</module>
 		<module>com.github.camel-tooling.dap.eclipse.client.tests.integration</module>
+		<module>com.github.camel-tooling.dap.eclipse.client.tests.ui</module>
 	</modules>
 	<build>
 		<plugins>
