@@ -12,9 +12,12 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  com.jcraft.jsch;bundle-version="0.1.50",
  org.eclipse.reddeer.go;bundle-version="4.2.0",
- org.eclipse.reddeer.eclipse;bundle-version="4.2.0"
+ org.eclipse.reddeer.eclipse;bundle-version="4.2.0",
+ org.eclipse.reddeer.swt
 Export-Package: com.github.cameltooling.dap.reddeer,
+ com.github.cameltooling.dap.reddeer.debug,
  com.github.cameltooling.dap.reddeer.menu,
+ com.github.cameltooling.dap.reddeer.perspectives,
  com.github.cameltooling.dap.reddeer.utils
 Bundle-Vendor: %Bundle-Vendor
 Eclipse-BundleShape: dir
