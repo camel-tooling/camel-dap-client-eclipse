@@ -16,9 +16,11 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.reddeer.swt
 Export-Package: com.github.cameltooling.dap.reddeer,
  com.github.cameltooling.dap.reddeer.debug,
+ com.github.cameltooling.dap.reddeer.dialog,
  com.github.cameltooling.dap.reddeer.menu,
  com.github.cameltooling.dap.reddeer.perspectives,
- com.github.cameltooling.dap.reddeer.utils
+ com.github.cameltooling.dap.reddeer.utils,
+ com.github.cameltooling.dap.reddeer.wizard
 Bundle-Vendor: %Bundle-Vendor
 Eclipse-BundleShape: dir
 Automatic-Module-Name: com.github.cameltooling.dap.reddeer

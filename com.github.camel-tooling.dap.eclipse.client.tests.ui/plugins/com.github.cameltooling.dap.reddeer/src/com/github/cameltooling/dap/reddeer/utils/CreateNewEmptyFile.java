@@ -20,8 +20,6 @@ import com.github.cameltooling.dap.reddeer.wizard.NewGenericFileDialog;
 import com.github.cameltooling.dap.reddeer.wizard.NewGenericFileWizard;
 import com.github.cameltooling.dap.reddeer.wizard.NewJavaClassFirstPage;
 import com.github.cameltooling.dap.reddeer.wizard.NewJavaClassWizard;
-import com.github.cameltooling.dap.reddeer.wizard.NewXMLFileFirstPage;
-import com.github.cameltooling.dap.reddeer.wizard.NewXMLFileWizard;
 
 /**
  * Creates new empty file.
@@ -30,25 +28,17 @@ import com.github.cameltooling.dap.reddeer.wizard.NewXMLFileWizard;
  */
 public class CreateNewEmptyFile {
 
+	/**
+	 * Creates new generic file.
+	 *
+	 * @param filename Name of file.
+	 */
 	public static void genericFile(String filename) {
 		NewGenericFileWizard newGenFile = new NewGenericFileWizard();
 		newGenFile.open();
 		NewGenericFileDialog newGenFileDialog = new NewGenericFileDialog(newGenFile);
 		newGenFileDialog.setFileName(filename);
 		newGenFile.finish();
-	}
-
-	/**
-	 * Creates new empty XML file.
-	 *
-	 * @param filename Name of file.
-	 */
-	public static void XMLFile(String filename) {
-		NewXMLFileWizard newWizXML = new NewXMLFileWizard();
-		newWizXML.open();
-		NewXMLFileFirstPage newWizXMLPage = new NewXMLFileFirstPage(newWizXML);
-		newWizXMLPage.setFileName(filename);
-		newWizXML.finish();
 	}
 
 	/**

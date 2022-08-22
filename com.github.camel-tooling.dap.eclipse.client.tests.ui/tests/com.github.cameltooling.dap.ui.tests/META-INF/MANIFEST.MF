@@ -15,8 +15,6 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.reddeer.eclipse;bundle-version="4.2.0",
  org.assertj;bundle-version="1.7.1",
  org.eclipse.lsp4e.debug;bundle-version="0.13.0",
- org.eclipse.wst.xml.ui;bundle-version="1.2.0",
- org.eclipse.wst.xml.core;bundle-version="1.2.0",
  org.eclipse.ui.genericeditor;bundle-version="1.2.0",
  com.github.camel-tooling.dap.eclipse.client;bundle-version="0.0.1",
  com.github.cameltooling.dap.reddeer;bundle-version="0.0.1"
@@ -26,3 +24,4 @@ Bundle-Vendor: %Bundle-Vendor
 Eclipse-RegisterBuddy: org.apache.log4j
 Eclipse-BundleShape: dir
 Automatic-Module-Name: com.github.cameltooling.dap.ui.tests
+Import-Package: org.eclipse.debug.core

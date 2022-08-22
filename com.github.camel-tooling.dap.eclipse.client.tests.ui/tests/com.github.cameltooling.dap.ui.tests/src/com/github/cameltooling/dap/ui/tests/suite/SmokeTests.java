@@ -20,6 +20,7 @@ import org.eclipse.reddeer.junit.runner.RedDeerSuite;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite.SuiteClasses;
 
+import com.github.cameltooling.dap.ui.tests.AttachingDebuggerTest;
 import com.github.cameltooling.dap.ui.tests.PluginInfoTest;
 
 import junit.framework.TestSuite;
@@ -30,7 +31,8 @@ import junit.framework.TestSuite;
  * @author djelinek
  */
 @SuiteClasses({
-	PluginInfoTest.class
+	PluginInfoTest.class,
+	AttachingDebuggerTest.class
 	})
 
 @RunWith(RedDeerSuite.class)

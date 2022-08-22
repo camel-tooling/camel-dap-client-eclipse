@@ -51,6 +51,8 @@ public class EditorManipulator {
 
 	private static Logger log = Logger.getLogger(EditorManipulator.class);
 	
+	private static final String COULD_NOT_PARSE = "Could not parse your changes to the XML";
+	
 	private EditorManipulator() {
 		//private constructor, only static access
 	}
@@ -78,8 +80,8 @@ public class EditorManipulator {
 		new DefaultToolItem(new WorkbenchShell(), 0, new WithTooltipTextMatcher(new RegexMatcher("Save.*"))).click();
 		try {
 			log.debug("Check whether 'Could not parse your changes to the XML' dialog is appeared");
-			new WaitUntil(new ShellIsAvailable("Could not parse your changes to the XML"), TimePeriod.SHORT);
-			new DefaultShell("Could not parse your changes to the XML");
+			new WaitUntil(new ShellIsAvailable(COULD_NOT_PARSE), TimePeriod.SHORT);
+			new DefaultShell(COULD_NOT_PARSE);
 			new PushButton("OK").click();
 		} catch (Exception e) {
 			log.debug("Dialog 'Could not parse your changes to the XML' didn't appeared");
