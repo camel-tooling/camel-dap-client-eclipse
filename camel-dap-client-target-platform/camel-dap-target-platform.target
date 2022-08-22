@@ -19,7 +19,6 @@
 <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
 <unit id="org.eclipse.lsp4e.debug" version="0.13.5.202205301057"/>
 <unit id="org.eclipse.lsp4e.debug.source" version="0.13.5.202205301057"/>
-<unit id="org.eclipse.wst.xml_ui.feature.feature.group" version="3.26.0.v202204091445"/>
 <repository location="https://download.eclipse.org/releases/2022-06"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
