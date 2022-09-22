@@ -1,4 +1,4 @@
-/**
+/*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
  * this work for additional information regarding copyright ownership.
@@ -14,30 +14,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.cameltooling.dap.ui.tests.suite;
+package org.apache.camel.example;
 
-import org.eclipse.reddeer.junit.runner.RedDeerSuite;
-import org.junit.runner.RunWith;
-import org.junit.runners.Suite.SuiteClasses;
+public class MyBean {
 
-import com.github.cameltooling.dap.ui.tests.AttachingDebuggerTest;
-import com.github.cameltooling.dap.ui.tests.CreatingConfigurationsTest;
-import com.github.cameltooling.dap.ui.tests.PluginInfoTest;
+    private String hi;
+    private String bye;
 
-import junit.framework.TestSuite;
+    public MyBean(String hi, String bye) {
+        this.hi = hi;
+        this.bye = bye;
+    }
 
-/**
- * Runs Smoke Tests suite for Camel DAP Eclipse Client
- *
- * @author djelinek
- */
-@SuiteClasses({
-	PluginInfoTest.class,
-	CreatingConfigurationsTest.class,
-	AttachingDebuggerTest.class	
-	})
+    public String hello() {
+        return hi + " how are you?";
+    }
 
-@RunWith(RedDeerSuite.class)
-public class SmokeTests extends TestSuite {
-
+    public String bye() {
+        return bye + " World";
+    }
 }
