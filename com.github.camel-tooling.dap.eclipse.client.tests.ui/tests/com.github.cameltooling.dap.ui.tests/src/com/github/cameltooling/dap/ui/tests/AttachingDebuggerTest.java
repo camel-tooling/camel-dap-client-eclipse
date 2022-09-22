@@ -22,8 +22,10 @@ import org.eclipse.reddeer.eclipse.condition.ConsoleHasText;
 import org.eclipse.reddeer.eclipse.ui.navigator.resources.ProjectExplorer;
 import org.eclipse.reddeer.eclipse.ui.perspectives.DebugPerspective;
 import org.eclipse.reddeer.junit.runner.RedDeerSuite;
+import org.eclipse.reddeer.requirements.cleanworkspace.CleanWorkspaceRequirement;
 import org.eclipse.reddeer.requirements.openperspective.OpenPerspectiveRequirement.OpenPerspective;
 import org.eclipse.reddeer.workbench.impl.editor.DefaultEditor;
+import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -31,6 +33,7 @@ import org.junit.runner.RunWith;
 import com.github.cameltooling.dap.reddeer.dialog.DebugConfigurationDialog;
 import com.github.cameltooling.dap.reddeer.utils.CreateNewEmptyFile;
 import com.github.cameltooling.dap.reddeer.utils.JavaProjectFactory;
+import com.github.cameltooling.dap.reddeer.views.DebugView;
 import com.github.cameltooling.dap.ui.tests.utils.EditorManipulator;
 
 /**
@@ -43,17 +46,20 @@ public class AttachingDebuggerTest {
 
 	private static final String PROJECT_NAME = "attaching-dap";
 	private static final String CAMEL_CONTEXT = "camel-context.xml";
+	
+	public static final String CTD = "Camel Textual Debug";
+	public static final String DEBUG_CONF = "debug_conf";
 
 	public static final String RESOURCES_CONTEXT_PATH = "resources/camel-context-cbr.xml";
  
-	/*
+	/**
 	 * Prepares test environment. Creates Java project, XML camel context and
 	 * default Apache Camel Textual Debug configuration.
 	 */
 	@BeforeClass
 	public static void setupTestEnvironment() {
 		//create debug configuration
-		DebugConfigurationDialog.create("debug_conf");
+		DebugConfigurationDialog.createCTD(DEBUG_CONF);
 		
 		//create project with camel context
 		JavaProjectFactory.create(PROJECT_NAME);
@@ -64,12 +70,23 @@ public class AttachingDebuggerTest {
 		EditorManipulator.copyFileContentToXMLEditor(RESOURCES_CONTEXT_PATH);
 	}
 	
-	/*
-	 * Tests if Apache Camel Textual Debug is started properly. 
+	/**
+	 * Clean environment after test.
+	 * Removes created debug configurations and projects.
+	 */
+	@AfterClass
+	public static void removeCreatedConfigurations() {	
+		DebugConfigurationDialog.removeAllConfigurations();
+		new CleanWorkspaceRequirement().fulfill();
+	}
+	
+	/**
+	 * Tests if Apache Camel Textual Debug is started properly.
 	 */
 	@Test
 	public void testAttachingDebugger() {
-		DebugConfigurationDialog.debug("debug_conf");
+		DebugConfigurationDialog.debug(CTD, DEBUG_CONF);
 		new WaitUntil(new ConsoleHasText("\"command\":\"attach\",\"success\":true}"), TimePeriod.LONG);
+		new DebugView().cancelLaunchingJob(DEBUG_CONF);
 	}
 }

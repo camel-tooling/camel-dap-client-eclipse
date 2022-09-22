@@ -1,4 +1,4 @@
-/**
+/*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
  * this work for additional information regarding copyright ownership.
@@ -14,30 +14,30 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.cameltooling.dap.ui.tests.suite;
+package org.apache.camel.example;
 
-import org.eclipse.reddeer.junit.runner.RedDeerSuite;
-import org.junit.runner.RunWith;
-import org.junit.runners.Suite.SuiteClasses;
-
-import com.github.cameltooling.dap.ui.tests.AttachingDebuggerTest;
-import com.github.cameltooling.dap.ui.tests.CreatingConfigurationsTest;
-import com.github.cameltooling.dap.ui.tests.PluginInfoTest;
-
-import junit.framework.TestSuite;
+import org.apache.camel.main.Main;
 
 /**
- * Runs Smoke Tests suite for Camel DAP Eclipse Client
- *
- * @author djelinek
+ * Main class that boot the Camel application
  */
-@SuiteClasses({
-	PluginInfoTest.class,
-	CreatingConfigurationsTest.class,
-	AttachingDebuggerTest.class	
-	})
+public final class MyApplication {
 
-@RunWith(RedDeerSuite.class)
-public class SmokeTests extends TestSuite {
+    private MyApplication() {
+    }
+
+    public static void main(String[] args) throws Exception {
+        // use Camels Main class
+        Main main = new Main(MyApplication.class);
+        // and add all the XML routes
+        main.configure().withRoutesIncludePattern("routes/*.xml");
+        // turn on reloading routes on code-changes
+        main.configure().withRoutesReloadEnabled(true);
+        main.configure().withRoutesReloadDirectory("src/main/resources");
+        main.configure().withRoutesReloadPattern("routes/*.xml");
+
+        // now keep the application running until the JVM is terminated (ctrl + c or sigterm)
+        main.run(args);
+    }
 
 }

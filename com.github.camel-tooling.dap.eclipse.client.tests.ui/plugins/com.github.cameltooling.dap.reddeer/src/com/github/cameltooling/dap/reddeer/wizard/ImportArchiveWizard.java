@@ -14,30 +14,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.cameltooling.dap.ui.tests.suite;
+package com.github.cameltooling.dap.reddeer.wizard;
 
-import org.eclipse.reddeer.junit.runner.RedDeerSuite;
-import org.junit.runner.RunWith;
-import org.junit.runners.Suite.SuiteClasses;
-
-import com.github.cameltooling.dap.ui.tests.AttachingDebuggerTest;
-import com.github.cameltooling.dap.ui.tests.CreatingConfigurationsTest;
-import com.github.cameltooling.dap.ui.tests.PluginInfoTest;
-
-import junit.framework.TestSuite;
+import org.eclipse.reddeer.eclipse.selectionwizard.ImportMenuWizard;
 
 /**
- * Runs Smoke Tests suite for Camel DAP Eclipse Client
- *
- * @author djelinek
+ * Wizard for importing archive into workspace.
+ * 
+ * @author fpospisi
  */
-@SuiteClasses({
-	PluginInfoTest.class,
-	CreatingConfigurationsTest.class,
-	AttachingDebuggerTest.class	
-	})
+public class ImportArchiveWizard extends ImportMenuWizard {
 
-@RunWith(RedDeerSuite.class)
-public class SmokeTests extends TestSuite {
-
+	/**
+	 * Constructs the wizard.
+	 */
+	public ImportArchiveWizard() {
+		super("Import", "General", "Archive File");
+	}
 }

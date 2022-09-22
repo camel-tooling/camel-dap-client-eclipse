@@ -1,4 +1,4 @@
-/**
+/*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
  * this work for additional information regarding copyright ownership.
@@ -14,30 +14,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.cameltooling.dap.ui.tests.suite;
+package org.apache.camel.example;
 
-import org.eclipse.reddeer.junit.runner.RedDeerSuite;
-import org.junit.runner.RunWith;
-import org.junit.runners.Suite.SuiteClasses;
-
-import com.github.cameltooling.dap.ui.tests.AttachingDebuggerTest;
-import com.github.cameltooling.dap.ui.tests.CreatingConfigurationsTest;
-import com.github.cameltooling.dap.ui.tests.PluginInfoTest;
-
-import junit.framework.TestSuite;
+import org.apache.camel.BindToRegistry;
+import org.apache.camel.CamelContext;
+import org.apache.camel.Configuration;
+import org.apache.camel.PropertyInject;
+import org.apache.camel.CamelConfiguration;
 
 /**
- * Runs Smoke Tests suite for Camel DAP Eclipse Client
- *
- * @author djelinek
+ * Class to configure the Camel application.
  */
-@SuiteClasses({
-	PluginInfoTest.class,
-	CreatingConfigurationsTest.class,
-	AttachingDebuggerTest.class	
-	})
+@Configuration
+public class MyConfiguration implements CamelConfiguration {
 
-@RunWith(RedDeerSuite.class)
-public class SmokeTests extends TestSuite {
+    @BindToRegistry
+    public MyBean myBean(@PropertyInject("hi") String hi, @PropertyInject("bye") String bye) {
+        // this will create an instance of this bean with the name of the method (eg myBean)
+        return new MyBean(hi, bye);
+    }
+
+    @Override
+    public void configure(CamelContext camelContext) {
+        // this method is optional and can be removed if no additional configuration is needed.
+    }
 
 }
