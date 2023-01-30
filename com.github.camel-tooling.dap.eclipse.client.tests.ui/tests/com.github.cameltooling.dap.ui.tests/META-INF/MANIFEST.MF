@@ -22,7 +22,8 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.m2e.core.ui;bundle-version="1.19.0",
  org.eclipse.m2e.profiles.core;bundle-version="1.17.3",
  org.eclipse.m2e.profiles.ui;bundle-version="1.17.3",
- org.eclipse.m2e.launching;bundle-version="1.18.0"
+ org.eclipse.m2e.launching;bundle-version="1.18.0",
+ org.eclipse.reddeer.junit
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-11
 Bundle-Vendor: %Bundle-Vendor

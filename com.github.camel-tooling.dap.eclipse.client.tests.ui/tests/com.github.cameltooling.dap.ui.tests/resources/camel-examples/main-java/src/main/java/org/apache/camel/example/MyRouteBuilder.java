@@ -1,4 +1,4 @@
-/**
+/*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
  * this work for additional information regarding copyright ownership.
@@ -14,32 +14,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.cameltooling.dap.ui.tests.suite;
+package org.apache.camel.example;
 
-import org.eclipse.reddeer.junit.runner.RedDeerSuite;
-import org.junit.runner.RunWith;
-import org.junit.runners.Suite.SuiteClasses;
+import org.apache.camel.builder.RouteBuilder;
 
-import com.github.cameltooling.dap.ui.tests.AttachingDebuggerTest;
-import com.github.cameltooling.dap.ui.tests.CreatingConfigurationsTest;
-import com.github.cameltooling.dap.ui.tests.DebuggingCamelDSLsTest;
-import com.github.cameltooling.dap.ui.tests.PluginInfoTest;
+public class MyRouteBuilder extends RouteBuilder {
 
-import junit.framework.TestSuite;
-
-/**
- * Runs Smoke Tests suite for Camel DAP Eclipse Client
- *
- * @author djelinek
- */
-@SuiteClasses({
-	AttachingDebuggerTest.class,
-	CreatingConfigurationsTest.class,
-	DebuggingCamelDSLsTest.class,
-	PluginInfoTest.class,
-	})
-
-@RunWith(RedDeerSuite.class)
-public class SmokeTests extends TestSuite {
-
+    @Override
+    public void configure() throws Exception {
+        from("timer:foo").routeId("foo")
+        	.setBody(constant("Hello how are you?"))
+        	.log("${body}")
+        	.setBody(constant("Bye World"))
+        	.log("${body}");
+    }
 }

@@ -18,25 +18,26 @@ package com.github.cameltooling.dap.ui.tests;
 
 import static org.junit.Assert.assertTrue;
 
+import org.eclipse.reddeer.common.matcher.RegexMatcher;
 import org.eclipse.reddeer.common.wait.TimePeriod;
 import org.eclipse.reddeer.common.wait.WaitUntil;
-import org.eclipse.reddeer.common.wait.WaitWhile;
 import org.eclipse.reddeer.eclipse.condition.ConsoleHasText;
+import org.eclipse.reddeer.eclipse.ui.console.ConsoleView;
 import org.eclipse.reddeer.eclipse.ui.perspectives.DebugPerspective;
 import org.eclipse.reddeer.junit.runner.RedDeerSuite;
-import org.eclipse.reddeer.requirements.cleanworkspace.CleanWorkspaceRequirement;
 import org.eclipse.reddeer.requirements.openperspective.OpenPerspectiveRequirement.OpenPerspective;
-import org.eclipse.reddeer.workbench.core.condition.JobIsRunning;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import com.github.cameltooling.dap.reddeer.dialog.DebugConfigurationDialog;
 import com.github.cameltooling.dap.reddeer.utils.ImportIntoWorkspace;
+import com.github.cameltooling.dap.reddeer.utils.JavaProjectFactory;
 import com.github.cameltooling.dap.reddeer.views.DebugView;
 
 /**
- * Checks creating of debug configuration for Maven, Camel Textual Debug and Launch Group.
+ * Checks creating of debug configuration for Maven, Camel Textual Debug and
+ * Launch Group.
  * 
  * @author fpospisi
  */
@@ -47,42 +48,41 @@ public class CreatingConfigurationsTest {
 	public static final String RESOURCES_BUILDER_PATH = "resources/my-route.xml";
 
 	public static final String PROJECT_FOLDER_PATH = "resources/camel-examples/main-xml";
-	
-	private static final String MVN_DEBUG = "Maven Build";
-	private static final String CAMEL_TEXT_DEBUG = "Camel Textual Debug";
-	private static final String GROUPED_DEBUG = "Launch Group";
 
 	public static final String MVN_CONF = "mvn_conf";
+	public static final String MVN_BASE = "${workspace_loc:/main-xml}";
 	public static final String CTD_CONF = "ctd_conf";
 	public static final String GROUPED_CONF = "grouped_conf";
+
+	public static final String EXPECTED_LOG = "Hello how are you?";
 
 	@BeforeClass
 	public static void setupTestEnvironment() {
 		ImportIntoWorkspace.importFolder(PROJECT_FOLDER_PATH);
 	}
-	
+
 	@AfterClass
-	public static void removeCreatedConfigurations() {	
-		DebugConfigurationDialog.removeAllConfigurations();
-		new CleanWorkspaceRequirement().fulfill();
+	public static void removeCreatedConfigurations() {
+		DebugView.removeAllConfigurations();
+		JavaProjectFactory.deleteAllProjects();
 	}
-	
+
 	/*
 	 * Create Maven configuration.
 	 */
 	@Test
 	public void testCreatingMavenConfiguration() {
-		 DebugConfigurationDialog.createMaven(MVN_CONF, "${workspace_loc:/main-xml}");
-		 assertTrue(DebugConfigurationDialog.configurationExists(MVN_DEBUG,MVN_CONF));	 		 
+		new DebugConfigurationDialog().createMaven(MVN_CONF, MVN_BASE);
+		assertTrue(new DebugConfigurationDialog().mavenExists(MVN_CONF));
 	}
-	
+
 	/*
 	 * Create Camel Textual Debug configuration.
 	 */
 	@Test
 	public void testCreatingCTDConfiguration() {
-		DebugConfigurationDialog.createCTD(CTD_CONF);
-		assertTrue(DebugConfigurationDialog.configurationExists(CAMEL_TEXT_DEBUG, CTD_CONF));	
+		new DebugConfigurationDialog().createCTD(CTD_CONF);
+		assertTrue(new DebugConfigurationDialog().CTDExists(CTD_CONF));
 	}
 
 	/*
@@ -90,11 +90,13 @@ public class CreatingConfigurationsTest {
 	 */
 	@Test
 	public void testCreatingLGConfigurations() {
-		DebugConfigurationDialog.createLaunchGroup(GROUPED_CONF, MVN_CONF, CTD_CONF);
-		assertTrue(DebugConfigurationDialog.configurationExists(GROUPED_DEBUG,GROUPED_CONF));
-		DebugConfigurationDialog.debug("Launch Group", GROUPED_CONF);
-		new WaitUntil(new ConsoleHasText("Hello how are you?"), TimePeriod.VERY_LONG);
-		new WaitWhile(new JobIsRunning(), TimePeriod.LONG);
-		new DebugView().terminateConfiguration(GROUPED_CONF, GROUPED_DEBUG);
+		new DebugConfigurationDialog().createLaunchGroup(GROUPED_CONF, MVN_CONF, CTD_CONF);
+		assertTrue(new DebugConfigurationDialog().launchGroupExists(GROUPED_CONF));
+
+		new DebugConfigurationDialog().debugLaunchGroup(GROUPED_CONF, true);
+		new ConsoleView().switchConsole(new RegexMatcher(".*" + MVN_CONF + ".*"));
+		new WaitUntil(new ConsoleHasText(EXPECTED_LOG), TimePeriod.DEFAULT);
+
+		new DebugView().terminateConfiguration(GROUPED_CONF, DebugView.GROUPED_DEBUG);
 	}
 }

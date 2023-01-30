@@ -14,32 +14,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.cameltooling.dap.ui.tests.suite;
+package com.github.cameltooling.dap.reddeer.launchconfigurations;
 
-import org.eclipse.reddeer.junit.runner.RedDeerSuite;
-import org.junit.runner.RunWith;
-import org.junit.runners.Suite.SuiteClasses;
-
-import com.github.cameltooling.dap.ui.tests.AttachingDebuggerTest;
-import com.github.cameltooling.dap.ui.tests.CreatingConfigurationsTest;
-import com.github.cameltooling.dap.ui.tests.DebuggingCamelDSLsTest;
-import com.github.cameltooling.dap.ui.tests.PluginInfoTest;
-
-import junit.framework.TestSuite;
+import org.eclipse.reddeer.eclipse.debug.ui.launchConfigurations.LaunchConfiguration;
 
 /**
- * Runs Smoke Tests suite for Camel DAP Eclipse Client
- *
- * @author djelinek
+ * Represents 'Launch Group' of launch configuration in Launch configuration dialog.
+ * 
+ * @author fpospisi
  */
-@SuiteClasses({
-	AttachingDebuggerTest.class,
-	CreatingConfigurationsTest.class,
-	DebuggingCamelDSLsTest.class,
-	PluginInfoTest.class,
-	})
+public class LaunchGroupConfiguration extends LaunchConfiguration {
 
-@RunWith(RedDeerSuite.class)
-public class SmokeTests extends TestSuite {
-
+	public LaunchGroupConfiguration() {
+		super("Launch Group");
+	}
 }

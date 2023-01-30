@@ -1,4 +1,4 @@
-/**
+/*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
  * this work for additional information regarding copyright ownership.
@@ -14,32 +14,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.cameltooling.dap.ui.tests.suite;
+package org.apache.camel.example;
 
-import org.eclipse.reddeer.junit.runner.RedDeerSuite;
-import org.junit.runner.RunWith;
-import org.junit.runners.Suite.SuiteClasses;
-
-import com.github.cameltooling.dap.ui.tests.AttachingDebuggerTest;
-import com.github.cameltooling.dap.ui.tests.CreatingConfigurationsTest;
-import com.github.cameltooling.dap.ui.tests.DebuggingCamelDSLsTest;
-import com.github.cameltooling.dap.ui.tests.PluginInfoTest;
-
-import junit.framework.TestSuite;
+import org.apache.camel.main.Main;
 
 /**
- * Runs Smoke Tests suite for Camel DAP Eclipse Client
- *
- * @author djelinek
+ * Main class that boot the Camel application
  */
-@SuiteClasses({
-	AttachingDebuggerTest.class,
-	CreatingConfigurationsTest.class,
-	DebuggingCamelDSLsTest.class,
-	PluginInfoTest.class,
-	})
+public class MyApplication {
 
-@RunWith(RedDeerSuite.class)
-public class SmokeTests extends TestSuite {
+    public static void main(String[] args) throws Exception {
+        // use Camels Main class
+        Main main = new Main(MyApplication.class);
+        // now keep the application running until the JVM is terminated (ctrl + c or sigterm)
+        main.run(args);
+    }
 
 }

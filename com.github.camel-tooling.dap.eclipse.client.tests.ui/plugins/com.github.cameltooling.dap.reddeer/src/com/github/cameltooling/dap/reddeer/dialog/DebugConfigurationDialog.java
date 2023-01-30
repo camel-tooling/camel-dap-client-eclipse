@@ -20,8 +20,10 @@ import java.util.List;
 
 import org.eclipse.reddeer.common.wait.TimePeriod;
 import org.eclipse.reddeer.common.wait.WaitUntil;
-import org.eclipse.reddeer.eclipse.core.resources.DefaultProject;
-import org.eclipse.reddeer.eclipse.ui.navigator.resources.ProjectExplorer;
+import org.eclipse.reddeer.common.wait.WaitWhile;
+import org.eclipse.reddeer.eclipse.debug.ui.launchConfigurations.DebugConfigurationsDialog;
+import org.eclipse.reddeer.eclipse.debug.ui.launchConfigurations.LaunchConfiguration;
+import org.eclipse.reddeer.swt.api.Button;
 import org.eclipse.reddeer.swt.api.Shell;
 import org.eclipse.reddeer.swt.api.TreeItem;
 import org.eclipse.reddeer.swt.condition.ShellIsAvailable;
@@ -29,238 +31,252 @@ import org.eclipse.reddeer.swt.impl.button.CheckBox;
 import org.eclipse.reddeer.swt.impl.button.OkButton;
 import org.eclipse.reddeer.swt.impl.button.PushButton;
 import org.eclipse.reddeer.swt.impl.combo.LabeledCombo;
-import org.eclipse.reddeer.swt.impl.menu.ShellMenuItem;
 import org.eclipse.reddeer.swt.impl.shell.DefaultShell;
 import org.eclipse.reddeer.swt.impl.text.LabeledText;
-import org.eclipse.reddeer.swt.impl.toolbar.DefaultToolBar;
-import org.eclipse.reddeer.swt.impl.toolbar.DefaultToolItem;
 import org.eclipse.reddeer.swt.impl.tree.DefaultTree;
 import org.eclipse.reddeer.swt.impl.tree.DefaultTreeItem;
-import org.eclipse.reddeer.workbench.impl.shell.WorkbenchShell;
+import org.eclipse.reddeer.workbench.core.condition.JobIsRunning;
+import com.github.cameltooling.dap.reddeer.launchconfigurations.CamelTextualDebugConfiguration;
+import com.github.cameltooling.dap.reddeer.launchconfigurations.LaunchGroupConfiguration;
+import com.github.cameltooling.dap.reddeer.launchconfigurations.MavenBuildLaunchConfiguration;
 
 /**
+ * Represents 'Debug Configuration' dialog.
  * 
  * @author fpospisi
  */
-public class DebugConfigurationDialog {
+public class DebugConfigurationDialog extends DebugConfigurationsDialog {
 
 	private static final String DEBUG_CONF = "Debug Configurations";
 
-	private static final String CAMEL_TEXT_DEBUG = "Camel Textual Debug";
-	private static final String MVN_DEBUG = "Maven Build";
-	private static final String GROUPED_DEBUG = "Launch Group";
-
-	private static final String DEBUG_BTN = "Debug";
-
 	/**
-	 * Creates Camel Textual Debug debug configuration.
+	 * Start debug for given configuration.
 	 * 
-	 * @param name of created configuration.
+	 * @param lc   Kind of Launch Configuration.
+	 * @param name Name of configuration.
 	 */
-	public static void createCTD(String name) {
-		openDebugConfigurations();
-		createNewConfiguration(CAMEL_TEXT_DEBUG);
-
-		// set values
-		new LabeledText(new DefaultShell(DEBUG_CONF), "Name:").setText(name);
-
-		saveChangesAndExit();
+	public void debug(LaunchConfiguration lc, String name) {
+		debugWithoutWait(lc, name);
+		new WaitWhile(new JobIsRunning(), TimePeriod.LONG);
 	}
 
 	/**
-	 * Creates Maven debug configuration.
+	 * Start debug for given configuration without waiting for running job.
 	 * 
-	 * @param name of created configuration.
-	 * @param baseDirectory for configuration.
+	 * @param lc   Kind of Launch Configuration.
+	 * @param name Name of configuration.
 	 */
-	public static void createMaven(String name, String baseDirectory) {
-		openDebugConfigurations();
-		createNewConfiguration(MVN_DEBUG);
+	public void debugWithoutWait(LaunchConfiguration lc, String name) {
+		open();
+		select(lc, name);
+		String shellText = new DefaultShell().getText();
+		Button button = new PushButton("Debug");
+		button.click();
+		new WaitWhile(new ShellIsAvailable(shellText), TimePeriod.LONG);
+	}
 
-		// set values
+	/**
+	 * Check if given configuration exists.
+	 * 
+	 * @param lc   Kind of Launch Configuration.
+	 * @param name Name of configuration.
+	 * @return true if exists, otherwise false
+	 */
+	public boolean configurationExists(LaunchConfiguration lc, String name) {
+		open();
+		Shell shell = new DefaultShell(DEBUG_CONF);
+		new DefaultTree(shell).getItem(lc.getType()).expand();
+		List<TreeItem> items = new DefaultTree().getAllItems();
+		for (TreeItem item : items) {
+			System.out.println(item.getText());
+			if (item.getText().equals(name)) {
+				close();
+				return true;
+			}
+		}
+		close();
+		return false;
+	}
+
+	/**
+	 * Remove configuration with given name.
+	 * 
+	 * @param lc   Kind of Launch Configuration.
+	 * @param name Name of configuration.
+	 */
+	public void deleteConfiguration(LaunchConfiguration lc, String name) {
+		open();
+		delete(lc, name);
+		close(true);
+	}
+
+	// Maven
+	/**
+	 * Creates 'Maven Build' configuration with given name and baseDirectory.
+	 * 
+	 * @param name          Name of created configuration.
+	 * @param baseDirectory Used base directory.
+	 */
+	public void createMaven(String name, String baseDirectory) {
+		open();
+		create(new MavenBuildLaunchConfiguration(), name);
 		Shell shell = new DefaultShell(DEBUG_CONF);
 		new LabeledText(shell, "Name:").setText(name);
 		new LabeledText(shell, "Base directory:").setText(baseDirectory);
-		new LabeledText(shell, "Goals:").setText("compile camel:run");
+		new LabeledText(shell, "Goals:").setText("clean compile camel:run");
 		new LabeledText(shell, "Profiles:").setText("camel.debug");
 		new CheckBox(shell, "Skip Tests").click();
-
-		saveChangesAndExit();
+		close(true);
 	}
 
 	/**
-	 * Creates Launch Group debug configuration. Maven and CTD configuration must be
-	 * created before.
+	 * Check if 'Maven Build' configuration with given name exists.
 	 * 
-	 * @param name of created configuration.
-	 * @param mvnConfName name of Maven configuration.
-	 * @param ctdConfName name of Camel Textual Debug configuration.
+	 * @param name Name of configuration.
+	 * @return true if exists, otherwise false
 	 */
-	public static void createLaunchGroup(String name, String mvnConfName, String ctdConfName) {
-		openDebugConfigurations();
-		createNewConfiguration(GROUPED_DEBUG);
-		
-		Shell shell = new DefaultShell(DEBUG_CONF);
-		new LabeledText(shell, "Name:").setText(name);
+	public boolean mavenExists(String name) {
+		return configurationExists(new MavenBuildLaunchConfiguration(), name);
+	}
 
-		// MAVEN
+	/**
+	 * Remove 'Maven Build' with given name.
+	 * 
+	 * @param name Name of removed configuration.
+	 */
+	public void deleteMaven(String name) {
+		deleteConfiguration(new MavenBuildLaunchConfiguration(), name);
+	}
+
+	/**
+	 * Debug 'Maven Build' with given name.
+	 * 
+	 * @param name Name of 'Maven Build'.
+	 * @param wait Wait until Job start running.
+	 */
+	public void debugMaven(String name, boolean wait) {
+		if (wait) {
+			debug(new MavenBuildLaunchConfiguration(), name);
+		} else {
+			debugWithoutWait(new MavenBuildLaunchConfiguration(), name);
+		}
+	}
+
+	// Camel Textual Debug
+	/**
+	 * Creates 'Camel Textual Debug' configuration with given name and
+	 * baseDirectory.
+	 * 
+	 * @param name Name of created configuration.
+	 */
+	public void createCTD(String name) {
+		open();
+		create(new CamelTextualDebugConfiguration(), name);
+		close(true);
+	}
+
+	/**
+	 * Check if 'Camel Textual Debug' configuration with given name exists.
+	 * 
+	 * @param name Name of configuration.
+	 * @return true if exists, otherwise false
+	 */
+	public boolean CTDExists(String name) {
+		return configurationExists(new CamelTextualDebugConfiguration(), name);
+	}
+
+	/**
+	 * Remove 'Camel Textual Debug' with given name.
+	 * 
+	 * @param name Name of removed configuration.
+	 */
+	public void deleteCTD(String name) {
+		deleteConfiguration(new CamelTextualDebugConfiguration(), name);
+	}
+
+	/**
+	 * Debug 'Camel Textual Debug' with given name.
+	 * 
+	 * @param name Name of 'Camel Textual Debug'.
+	 * @param wait Wait until Job start running.
+	 */
+	public void debugCTD(String name, boolean wait) {
+		if (wait) {
+			debug(new CamelTextualDebugConfiguration(), name);
+		} else {
+			debugWithoutWait(new CamelTextualDebugConfiguration(), name);
+		}
+	}
+
+	// Launch Group
+	/**
+	 * Creates 'Launch Group' configuration for existing 'Maven Build' and 'Camel
+	 * Textual Debug' configurations.
+	 * 
+	 * @param name        Name of created configuration.
+	 * @param mvnConfName Name of existing 'Maven Build' configuration.
+	 * @param ctdConfName Name of existing 'Camel Textual Debug' configuration.
+	 */
+	public void createLaunchGroup(String name, String mvnConfName, String ctdConfName) {
+		open();
+		create(new LaunchGroupConfiguration(), name);
+		Shell shell = new DefaultShell(DEBUG_CONF);
 		new WaitUntil(new ShellIsAvailable(shell), TimePeriod.DEFAULT);
+
+		// Maven
 		new PushButton(shell, "Add...").click();
 		new WaitUntil(new ShellIsAvailable("Add Launch Configuration"), TimePeriod.DEFAULT);
 
-		String[] mvnConfAbsPath = { MVN_DEBUG, mvnConfName };
+		String[] mvnConfAbsPath = { "Maven Build", mvnConfName };
 		new DefaultTreeItem(mvnConfAbsPath).select();
 		new LabeledCombo("Post launch action:").setSelection(3);
 		new LabeledText("Regular Expression:").setText(".*JMX Connector thread started and listening at.*");
 		new OkButton().click();
 
-		// CTD
+		// Camel Textual Debug
 		new WaitUntil(new ShellIsAvailable(shell), TimePeriod.DEFAULT);
 		new PushButton(shell, "Add...").click();
 		new WaitUntil(new ShellIsAvailable("Add Launch Configuration"), TimePeriod.DEFAULT);
 
-		String[] ctdConfAbsPath = { CAMEL_TEXT_DEBUG, ctdConfName };
+		String[] ctdConfAbsPath = { "Camel Textual Debug", ctdConfName };
 		new DefaultTreeItem(ctdConfAbsPath).select();
 		new CheckBox("Adopt launch if already running").click();
 		new OkButton().click();
 
 		new WaitUntil(new ShellIsAvailable(shell), TimePeriod.DEFAULT);
-		saveChangesAndExit();
+		close(true);
 	}
 
 	/**
-	 * Run debugger.
-	 *
-	 * @param configurationType used for debug.
-	 * @param debugConfiguration used for debug.
-	 */
-	public static void debug(String configurationType, String debugConfiguration) {
-		openDebugConfigurations();
-
-		new DefaultTree(new DefaultShell(DEBUG_CONF)).getItem(configurationType, debugConfiguration).select();
-		new PushButton(DEBUG_BTN).click();
-	}
-
-	/**
-	 * Run debugger for specified file in specified project.
-	 *
-	 * @param project where required file is located.
-	 * @param file to debug.
-	 * @param debugConfiguration used for debug.
-	 */
-	public static void debugFile(String project, String file, String debugConfiguration) {
-		DefaultProject proj = new ProjectExplorer().getProject(project);
-		proj.getProjectItem(file).select();
-
-		openDebugConfigurations();
-
-		Shell shell = new DefaultShell(DEBUG_CONF);
-
-		new DefaultTree(shell).getItem(CAMEL_TEXT_DEBUG, debugConfiguration).select();
-		new PushButton(DEBUG_BTN).click();
-	}
-
-	/**
-	 * Checks if required configuration is existing.
+	 * Check if 'Launch Group' configuration with given name exists.
 	 * 
-	 * @param configurationType Type of configuration.
-	 * @param configurationName Name of configuration.
-	 * @return true If exists.
-	 * @return false If not exists.
+	 * @param name Name of configuration.
+	 * @return true if exists, otherwise false
 	 */
-	public static boolean configurationExists(String configurationType, String configurationName) {
-		openDebugConfigurations();
-
-		Shell shell = new DefaultShell(DEBUG_CONF);
-
-		new DefaultTree(shell).getItem(configurationType).expand();
-		
-		List<TreeItem> items = new DefaultTree().getAllItems();
-		for (TreeItem item : items) {
-			System.out.println(item.getText());
-			if (item.getText().equals(configurationName)) {
-				new PushButton("Close").click();
-				return true;
-			}
-		}
-		
-		new PushButton("Close").click();
-		return false;
+	public boolean launchGroupExists(String name) {
+		return configurationExists(new LaunchGroupConfiguration(), name);
 	}
 
 	/**
-	 * Removes selected debug configuration.
+	 * Remove 'Launch Group' with given name.
 	 * 
-	 * @param configurationType Type of configuration.
-	 * @param configurationName Name of configuration.
+	 * @param name Name of removed configuration.
 	 */
-	public static void removeConfiguration(String configurationType, String configurationName) {
-		openDebugConfigurations();
-		Shell shell = new DefaultShell(DEBUG_CONF);
-
-		new DefaultTree(shell).getItem(configurationType).expand();
-
-		List<TreeItem> items = new DefaultTree().getAllItems();
-		for (TreeItem item : items) {
-			if (item.getText().equals(configurationName)) {
-				item.select();
-				deleteSelectedConfiguration();
-			}
-		}
-
-		new PushButton("Close").click();
+	public void deleteLaunchGroup(String name) {
+		deleteConfiguration(new LaunchGroupConfiguration(), name);
 	}
 
 	/**
-	 * Removes all existing debug configurations.
-	 */
-	public static void removeAllConfigurations() {
-		openDebugConfigurations();
-
-		List<TreeItem> items = new DefaultTree().getAllItems();
-		for (TreeItem item : items) {		
-			item.select();
-			
-			DefaultToolBar toolbar = new DefaultToolBar(0);
-			if (new DefaultToolItem(toolbar, 4).isEnabled()) { // checks if it's created configuration
-				deleteSelectedConfiguration();
-			}
-		}
-		
-		new PushButton("Close").click();
-	}
-
-	/**
-	 * Opens Debug Configuration wizard.
-	 */
-	private static void openDebugConfigurations() {
-		new ShellMenuItem(new WorkbenchShell(), "Run", "Debug Configurations...").select();
-		new WaitUntil(new ShellIsAvailable(DEBUG_CONF), TimePeriod.DEFAULT);
-	}
-	
-	/**
-	 * Removes debug configuration which is currently selected.
-	 */
-	private static void deleteSelectedConfiguration() {
-		DefaultToolBar toolbar = new DefaultToolBar(0);
-		new DefaultToolItem(toolbar, 4).click();
-		new PushButton("Delete").click();
-	}
-	
-	/**
-	 * Creates new configuration for selected type.
+	 * Debug 'Launch Group' with given name.
 	 * 
-	 * @param configurationType Type of required configuration.
+	 * @param name Name of 'Launch Group'.
+	 * @param wait Wait until Job start running.
 	 */
-	private static void createNewConfiguration(String configurationType) {
-		new DefaultTree(new DefaultShell(DEBUG_CONF)).getItem(configurationType).doubleClick();
-	}
-	
-	/*
-	 * Saves currently created changes and exits. 
-	 */
-	private static void saveChangesAndExit() {
-		new PushButton("Apply").click();
-		new PushButton("Close").click();
+	public void debugLaunchGroup(String name, boolean wait) {
+		if (wait) {
+			debug(new LaunchGroupConfiguration(), name);
+		} else {
+			debugWithoutWait(new LaunchGroupConfiguration(), name);
+		}
 	}
 }
