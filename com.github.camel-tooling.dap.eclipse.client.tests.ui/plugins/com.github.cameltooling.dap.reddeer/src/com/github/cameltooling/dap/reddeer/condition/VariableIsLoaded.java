@@ -14,32 +14,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.cameltooling.dap.ui.tests.suite;
+package com.github.cameltooling.dap.reddeer.condition;
 
-import org.eclipse.reddeer.junit.runner.RedDeerSuite;
-import org.junit.runner.RunWith;
-import org.junit.runners.Suite.SuiteClasses;
+import org.eclipse.reddeer.common.condition.AbstractWaitCondition;
+import org.eclipse.reddeer.common.exception.RedDeerException;
 
-import com.github.cameltooling.dap.ui.tests.AttachingDebuggerTest;
-import com.github.cameltooling.dap.ui.tests.CreatingConfigurationsTest;
-import com.github.cameltooling.dap.ui.tests.DebuggingCamelDSLsTest;
-import com.github.cameltooling.dap.ui.tests.PluginInfoTest;
-
-import junit.framework.TestSuite;
+import com.github.cameltooling.dap.reddeer.views.DebugView;
 
 /**
- * Runs Smoke Tests suite for Camel DAP Eclipse Client
- *
- * @author djelinek
+ * Checks, if variable is properly loaded in DebugView.
+ * 
+ * @author fpospisi
  */
-@SuiteClasses({
-	AttachingDebuggerTest.class,
-	CreatingConfigurationsTest.class,
-	DebuggingCamelDSLsTest.class,
-	PluginInfoTest.class,
-	})
+public class VariableIsLoaded extends AbstractWaitCondition {
 
-@RunWith(RedDeerSuite.class)
-public class SmokeTests extends TestSuite {
-
+	@Override
+	public boolean test() {
+		try {
+			return DebugView.getMessageBodyFromVariable() != null;
+		} catch (RedDeerException e) {
+			return false;
+		}
+	}
 }

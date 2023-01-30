@@ -1,4 +1,4 @@
-/**
+/*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
  * this work for additional information regarding copyright ownership.
@@ -14,32 +14,31 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.cameltooling.dap.ui.tests.suite;
+package org.apache.camel.example;
 
-import org.eclipse.reddeer.junit.runner.RedDeerSuite;
-import org.junit.runner.RunWith;
-import org.junit.runners.Suite.SuiteClasses;
+import java.util.concurrent.TimeUnit;
 
-import com.github.cameltooling.dap.ui.tests.AttachingDebuggerTest;
-import com.github.cameltooling.dap.ui.tests.CreatingConfigurationsTest;
-import com.github.cameltooling.dap.ui.tests.DebuggingCamelDSLsTest;
-import com.github.cameltooling.dap.ui.tests.PluginInfoTest;
+import org.apache.camel.builder.NotifyBuilder;
+import org.apache.camel.test.main.junit5.CamelMainTestSupport;
+import org.junit.jupiter.api.Test;
 
-import junit.framework.TestSuite;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
- * Runs Smoke Tests suite for Camel DAP Eclipse Client
- *
- * @author djelinek
+ * A unit test checking that Camel supports YAML routes.
  */
-@SuiteClasses({
-	AttachingDebuggerTest.class,
-	CreatingConfigurationsTest.class,
-	DebuggingCamelDSLsTest.class,
-	PluginInfoTest.class,
-	})
+class MainYAMLTest extends CamelMainTestSupport {
 
-@RunWith(RedDeerSuite.class)
-public class SmokeTests extends TestSuite {
+    @Test
+    void should_support_yaml_routes() {
+        NotifyBuilder notify = new NotifyBuilder(context).whenCompleted(1).whenBodiesDone("Bye World").create();
+        assertTrue(
+            notify.matches(20, TimeUnit.SECONDS), "1 message should be completed"
+        );
+    }
 
+    @Override
+    protected Class<?> getMainClass() {
+        return MyApplication.class;
+    }
 }

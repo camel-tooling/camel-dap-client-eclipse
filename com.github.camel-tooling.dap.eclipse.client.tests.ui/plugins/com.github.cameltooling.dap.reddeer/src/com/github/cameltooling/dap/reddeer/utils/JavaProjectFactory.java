@@ -16,20 +16,11 @@
  */
 package com.github.cameltooling.dap.reddeer.utils;
 
-import org.eclipse.reddeer.common.wait.AbstractWait;
 import org.eclipse.reddeer.common.wait.TimePeriod;
-import org.eclipse.reddeer.common.wait.WaitWhile;
 import org.eclipse.reddeer.eclipse.jdt.ui.wizards.JavaProjectWizard;
 import org.eclipse.reddeer.eclipse.ui.navigator.resources.ProjectExplorer;
-import org.eclipse.reddeer.eclipse.utils.DeleteUtils;
 import org.eclipse.reddeer.eclipse.wst.jsdt.ui.wizards.JavaProjectWizardFirstPage;
-import org.eclipse.reddeer.swt.api.Shell;
-import org.eclipse.reddeer.swt.impl.button.CheckBox;
-import org.eclipse.reddeer.swt.impl.button.PushButton;
-import org.eclipse.reddeer.swt.impl.menu.ContextMenuItem;
-import org.eclipse.reddeer.swt.impl.shell.DefaultShell;
-import org.eclipse.reddeer.workbench.core.condition.JobIsRunning;
-import org.eclipse.reddeer.workbench.impl.shell.WorkbenchShell;
+import org.eclipse.reddeer.workbench.handler.EditorHandler;
 
 /**
  * Creates new Java project.
@@ -55,21 +46,11 @@ public class JavaProjectFactory {
 	 * Removes all projects.
 	 */
 	public static void deleteAllProjects() {
-		ProjectExplorer explorer = new ProjectExplorer();
-		explorer.activate();
-		if (explorer.getProjects().size() > 0) {
-			explorer.selectAllProjects();
-			new ContextMenuItem("Refresh").select();
-			new WaitWhile(new JobIsRunning(), TimePeriod.LONG);
-			AbstractWait.sleep(TimePeriod.SHORT);
-			new WorkbenchShell();
-			explorer.activate();
-			explorer.selectAllProjects();
-			new ContextMenuItem("Delete").select();
-			Shell s = new DefaultShell("Delete Resources");
-			new CheckBox().toggle(true);
-			new PushButton("OK").click();
-			DeleteUtils.handleDeletion(s, TimePeriod.LONG);
-		}
+		EditorHandler.getInstance().closeAll(true);
+		ProjectExplorer pe = new ProjectExplorer();
+		pe.open();
+		pe.deleteAllProjects(false);
+		pe.activate();
 	}
+
 }
