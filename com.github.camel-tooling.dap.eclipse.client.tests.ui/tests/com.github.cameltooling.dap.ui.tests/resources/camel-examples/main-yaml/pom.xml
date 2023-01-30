@@ -17,18 +17,14 @@
     limitations under the License.
 
 -->
-<project
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd"
-  xmlns="http://maven.apache.org/POM/4.0.0"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.apache.camel.example</groupId>
-  <artifactId>camel-example-main-xml</artifactId>
+  <artifactId>camel-example-main-yaml</artifactId>
   <version>3.20.0</version>
-  <properties>
-    <maven.compiler.source>1.8</maven.compiler.source>
-    <maven.compiler.target>1.8</maven.compiler.target>
-  </properties>
+  <name>Camel :: Example :: Main :: YAML</name>
+  <description>An example for showing standalone Camel using YAML</description>
   <licenses>
     <license>
       <name>Apache License, Version 2.0</name>
@@ -36,6 +32,22 @@
       <distribution>repo</distribution>
     </license>
   </licenses>
+  <properties>
+    <category>Beginner</category>
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <maven.compiler.target>1.8</maven.compiler.target>
+  </properties>
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.apache.camel</groupId>
+        <artifactId>camel-bom</artifactId>
+        <version>${project.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
   <dependencies>
     <dependency>
       <groupId>org.apache.camel</groupId>
@@ -45,7 +57,7 @@
     </dependency>
     <dependency>
       <groupId>org.apache.camel</groupId>
-      <artifactId>camel-xml-io-dsl</artifactId>
+      <artifactId>camel-yaml-dsl</artifactId>
       <version>${project.version}</version>
       <scope>compile</scope>
     </dependency>
@@ -85,27 +97,21 @@
       <version>1.2.11</version>
       <scope>compile</scope>
     </dependency>
-    <dependency>
-      <groupId>org.apache.camel</groupId>
-      <artifactId>camel-test-main-junit5</artifactId>
-      <version>${project.version}</version>
-      <scope>test</scope>
-    </dependency>
   </dependencies>
   <build>
     <plugins>
       <plugin>
         <groupId>org.apache.camel</groupId>
         <artifactId>camel-maven-plugin</artifactId>
-        <version>2.23.2</version>
+        <version>${project.version}</version>
         <configuration>
-          <logClasspath>false</logClasspath>
+          <logLevel>INFO</logLevel>
           <mainClass>org.apache.camel.example.MyApplication</mainClass>
         </configuration>
       </plugin>
     </plugins>
   </build>
-  <profiles>
+    <profiles>
     <profile>
       <id>camel.debug</id>
       <activation>

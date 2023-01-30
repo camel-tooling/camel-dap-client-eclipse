@@ -14,32 +14,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.cameltooling.dap.ui.tests.suite;
+package com.github.cameltooling.dap.reddeer.dialog;
 
-import org.eclipse.reddeer.junit.runner.RedDeerSuite;
-import org.junit.runner.RunWith;
-import org.junit.runners.Suite.SuiteClasses;
+import org.eclipse.reddeer.workbench.ui.dialogs.WorkbenchPreferenceDialog;
 
-import com.github.cameltooling.dap.ui.tests.AttachingDebuggerTest;
-import com.github.cameltooling.dap.ui.tests.CreatingConfigurationsTest;
-import com.github.cameltooling.dap.ui.tests.DebuggingCamelDSLsTest;
-import com.github.cameltooling.dap.ui.tests.PluginInfoTest;
-
-import junit.framework.TestSuite;
+import com.github.cameltooling.dap.reddeer.preference.DefaultEditorPreferencePage;
 
 /**
- * Runs Smoke Tests suite for Camel DAP Eclipse Client
- *
- * @author djelinek
+ * Represents dialog for setting default editor. 
+ * @author fpospisi
  */
-@SuiteClasses({
-	AttachingDebuggerTest.class,
-	CreatingConfigurationsTest.class,
-	DebuggingCamelDSLsTest.class,
-	PluginInfoTest.class,
-	})
-
-@RunWith(RedDeerSuite.class)
-public class SmokeTests extends TestSuite {
-
+public class DefaultEditorDialog {
+	
+	/**
+	 * Sets default editor for specific file type.
+	 * @param type Required file type.
+	 * @param editor Required default editor.
+	 */
+	public static void setDefault(String type, String editor) {
+		WorkbenchPreferenceDialog prefs = new WorkbenchPreferenceDialog();
+		DefaultEditorPreferencePage defaultEditor = new DefaultEditorPreferencePage(prefs);
+		prefs.open();
+		prefs.select(defaultEditor);
+		defaultEditor.set(type, editor);
+		prefs.ok();
+	}
 }

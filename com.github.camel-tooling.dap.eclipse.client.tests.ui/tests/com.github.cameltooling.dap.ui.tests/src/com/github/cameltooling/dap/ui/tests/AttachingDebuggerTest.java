@@ -22,7 +22,6 @@ import org.eclipse.reddeer.eclipse.condition.ConsoleHasText;
 import org.eclipse.reddeer.eclipse.ui.navigator.resources.ProjectExplorer;
 import org.eclipse.reddeer.eclipse.ui.perspectives.DebugPerspective;
 import org.eclipse.reddeer.junit.runner.RedDeerSuite;
-import org.eclipse.reddeer.requirements.cleanworkspace.CleanWorkspaceRequirement;
 import org.eclipse.reddeer.requirements.openperspective.OpenPerspectiveRequirement.OpenPerspective;
 import org.eclipse.reddeer.workbench.impl.editor.DefaultEditor;
 import org.junit.AfterClass;
@@ -44,13 +43,14 @@ import com.github.cameltooling.dap.ui.tests.utils.EditorManipulator;
 @RunWith(RedDeerSuite.class)
 public class AttachingDebuggerTest {
 
-	private static final String PROJECT_NAME = "attaching-dap";
-	private static final String CAMEL_CONTEXT = "camel-context.xml";
-	
-	public static final String CTD = "Camel Textual Debug";
+	public static final String PROJECT_NAME = "attaching-dap";
+	public static final String CAMEL_CONTEXT = "camel-context.xml";
+
 	public static final String DEBUG_CONF = "debug_conf";
 
 	public static final String RESOURCES_CONTEXT_PATH = "resources/camel-context-cbr.xml";
+	
+	public static final String EXPECTED_LOG = "\"command\":\"attach\",\"success\":true}";
  
 	/**
 	 * Prepares test environment. Creates Java project, XML camel context and
@@ -59,7 +59,7 @@ public class AttachingDebuggerTest {
 	@BeforeClass
 	public static void setupTestEnvironment() {
 		//create debug configuration
-		DebugConfigurationDialog.createCTD(DEBUG_CONF);
+		new DebugConfigurationDialog().createCTD(DEBUG_CONF);
 		
 		//create project with camel context
 		JavaProjectFactory.create(PROJECT_NAME);
@@ -76,8 +76,8 @@ public class AttachingDebuggerTest {
 	 */
 	@AfterClass
 	public static void removeCreatedConfigurations() {	
-		DebugConfigurationDialog.removeAllConfigurations();
-		new CleanWorkspaceRequirement().fulfill();
+		new DebugConfigurationDialog().deleteCTD(DEBUG_CONF);
+		JavaProjectFactory.deleteAllProjects();
 	}
 	
 	/**
@@ -85,8 +85,8 @@ public class AttachingDebuggerTest {
 	 */
 	@Test
 	public void testAttachingDebugger() {
-		DebugConfigurationDialog.debug(CTD, DEBUG_CONF);
-		new WaitUntil(new ConsoleHasText("\"command\":\"attach\",\"success\":true}"), TimePeriod.LONG);
+		new DebugConfigurationDialog().debugCTD(DEBUG_CONF, false);
+		new WaitUntil(new ConsoleHasText(EXPECTED_LOG), TimePeriod.DEFAULT);
 		new DebugView().cancelLaunchingJob(DEBUG_CONF);
 	}
 }
