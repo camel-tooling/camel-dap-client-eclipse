@@ -24,7 +24,7 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.m2e.profiles.ui;bundle-version="1.17.3",
  org.eclipse.m2e.launching;bundle-version="1.18.0"
 Bundle-ActivationPolicy: lazy
-Bundle-RequiredExecutionEnvironment: JavaSE-11
+Bundle-RequiredExecutionEnvironment: JavaSE-17
 Bundle-Vendor: %Bundle-Vendor
 Eclipse-RegisterBuddy: org.apache.log4j
 Eclipse-BundleShape: dir
