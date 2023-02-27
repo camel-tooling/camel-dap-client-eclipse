@@ -183,4 +183,16 @@ public class DebugView extends WorkbenchView {
 		
 		new PushButton("Close").click();
 	}
+	
+	/**
+	 * Wait until variable is properly loaded.
+	 */
+	public static void waitUntilVariableIsLoaded() {
+		for (int i = 0; i <= 5; i++) {
+			AbstractWait.sleep(TimePeriod.getCustom(3));
+			if (DebugView.getMessageBodyFromVariable() != null) {
+				break;
+			}
+		}
+	}
 }

@@ -152,7 +152,7 @@ public class DebuggingCamelDSLsTest {
 		editor.setBreakpoint();
 
 		// Check Message Body.
-		waitUntilVariableIsLoaded();
+		DebugView.waitUntilVariableIsLoaded();
 		assertEquals(EXPECTED_MESSAGE_1, DebugView.getMessageBodyFromVariable());
 
 		// Do steps inside code.
@@ -168,22 +168,10 @@ public class DebuggingCamelDSLsTest {
 		editor.activate();
 		editor.setBreakpoint();
 
-		waitUntilVariableIsLoaded();
+		DebugView.waitUntilVariableIsLoaded();
 		assertEquals(EXPECTED_MESSAGE_2, DebugView.getMessageBodyFromVariable());
 
 		// Disable second breakpoint.
 		new DebugView().disableAllbreakpoints();
-	}
-
-	/**
-	 * Wait until variable is properly loaded.
-	 */
-	private void waitUntilVariableIsLoaded() {
-		for (int i = 0; i <= 5; i++) {
-			AbstractWait.sleep(TimePeriod.getCustom(3));
-			if (DebugView.getMessageBodyFromVariable() != null) {
-				break;
-			}
-		}
 	}
 }

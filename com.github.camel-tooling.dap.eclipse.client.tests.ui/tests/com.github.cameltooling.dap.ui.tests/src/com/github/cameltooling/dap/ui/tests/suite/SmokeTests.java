@@ -23,6 +23,7 @@ import org.junit.runners.Suite.SuiteClasses;
 import com.github.cameltooling.dap.ui.tests.AttachingDebuggerTest;
 import com.github.cameltooling.dap.ui.tests.CreatingConfigurationsTest;
 import com.github.cameltooling.dap.ui.tests.DebuggingCamelDSLsTest;
+import com.github.cameltooling.dap.ui.tests.InspectVariableTest;
 import com.github.cameltooling.dap.ui.tests.PluginInfoTest;
 
 import junit.framework.TestSuite;
@@ -36,6 +37,7 @@ import junit.framework.TestSuite;
 	AttachingDebuggerTest.class,
 	CreatingConfigurationsTest.class,
 	DebuggingCamelDSLsTest.class,
+	InspectVariableTest.class,
 	PluginInfoTest.class,
 	})
 
