@@ -25,6 +25,7 @@ import com.github.cameltooling.dap.ui.tests.CreatingConfigurationsTest;
 import com.github.cameltooling.dap.ui.tests.DebuggingCamelDSLsTest;
 import com.github.cameltooling.dap.ui.tests.InspectVariableTest;
 import com.github.cameltooling.dap.ui.tests.PluginInfoTest;
+import com.github.cameltooling.dap.ui.tests.StoppingOnBreakpointTest;
 
 import junit.framework.TestSuite;
 
@@ -39,6 +40,7 @@ import junit.framework.TestSuite;
 	DebuggingCamelDSLsTest.class,
 	InspectVariableTest.class,
 	PluginInfoTest.class,
+	StoppingOnBreakpointTest.class
 	})
 
 @RunWith(RedDeerSuite.class)
