@@ -18,16 +18,12 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest, macos-latest, windows-latest]
-        java: [11, 17, 18]
+        java: [17, 18]
         exclude:
           - os: ubuntu-latest
-            java: 11
-          - os: macos-latest
             java: 17
           - os: macos-latest
             java: 18
-          - os: windows-latest
-            java: 17
           - os: windows-latest
             java: 18
 
