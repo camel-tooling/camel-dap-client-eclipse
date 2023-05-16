@@ -43,7 +43,7 @@ import com.github.cameltooling.dap.ui.tests.utils.EditorManipulator;
 @RunWith(RedDeerSuite.class)
 public class AttachingDebuggerTest {
 
-	public static final String PROJECT_NAME = "attaching-dap";
+	public static final String PROJECT_NAME = "AttachingDap";
 	public static final String CAMEL_CONTEXT = "camel-context.xml";
 
 	public static final String DEBUG_CONF = "debug_conf";
