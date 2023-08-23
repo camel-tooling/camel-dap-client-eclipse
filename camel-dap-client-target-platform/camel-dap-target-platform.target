@@ -3,13 +3,13 @@
 <target name="camel-dap-eclipse" sequenceNumber="7">
 <locations>
 <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
-<unit id="org.eclipse.pde.feature.group" version="3.14.1500.v20230302-0300"/>
-<unit id="org.eclipse.pde.source.feature.group" version="3.14.1500.v20230302-0300"/>
-<unit id="org.eclipse.sdk.feature.group" version="4.27.0.v20230302-0300"/>
-<unit id="org.eclipse.sdk.tests.feature.group" version="4.27.0.v20230302-0300"/>
-<unit id="org.eclipse.test.feature.group" version="3.8.400.v20230219-1319"/>
-<unit id="org.eclipse.jface.text.tests" version="3.13.0.v20230203-1344"/>
-<repository location="https://download.eclipse.org/eclipse/updates/4.27/"/>
+<unit id="org.eclipse.pde.feature.group" version="3.15.0.v20230605-0440"/>
+<unit id="org.eclipse.pde.source.feature.group" version="3.15.0.v20230605-0440"/>
+<unit id="org.eclipse.sdk.feature.group" version="4.28.0.v20230605-0440"/>
+<unit id="org.eclipse.sdk.tests.feature.group" version="4.28.0.v20230605-0440"/>
+<unit id="org.eclipse.test.feature.group" version="3.8.500.v20230526-1457"/>
+<unit id="org.eclipse.jface.text.tests" version="3.13.100.v20230602-0700"/>
+<repository location="https://download.eclipse.org/eclipse/updates/4.28/"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
 <unit id="org.assertj" version="3.20.2.v20210706-1104"/>
@@ -17,32 +17,32 @@
 <repository location="https://download.eclipse.org/tools/orbit/R-builds/R20220302172233/repository"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
-<unit id="org.eclipse.lsp4e.debug" version="0.15.0.202211181112"/>
-<unit id="org.eclipse.lsp4e.debug.source" version="0.15.0.202211181112"/>
-<unit id="org.eclipse.m2e.core" version="2.0.7.20230307-1553"/>
-<unit id="org.eclipse.m2e.core.ui" version="2.0.4.20230305-1928"/>
-<unit id="org.eclipse.m2e.profiles.core" version="2.1.1.20230210-1347"/>
-<unit id="org.eclipse.m2e.profiles.ui" version="2.0.200.20230114-1140"/>
-<unit id="org.eclipse.m2e.launching" version="2.0.400.20230305-2143"/>
-<repository location="https://download.eclipse.org/releases/2023-03"/>
+<unit id="org.eclipse.lsp4e.debug" version="0.15.2.202305241157"/>
+<unit id="org.eclipse.lsp4e.debug.source" version="0.15.2.202305241157"/>
+<unit id="org.eclipse.m2e.core" version="2.0.8.20230520-0934"/>
+<unit id="org.eclipse.m2e.core.ui" version="2.0.5.20230320-1220"/>
+<unit id="org.eclipse.m2e.profiles.core" version="2.1.200.20230520-0934"/>
+<unit id="org.eclipse.m2e.profiles.ui" version="2.0.300.20230520-0934"/>
+<unit id="org.eclipse.m2e.launching" version="2.0.500.20230329-2139"/>
+<repository location="https://download.eclipse.org/releases/2023-06"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
-<unit id="org.eclipse.reddeer.codegen.feature.feature.group" version="4.5.0.v20230308-1253"/>
-<unit id="org.eclipse.reddeer.eclipse.feature.feature.group" version="4.5.0.v20230308-1253"/>
-<unit id="org.eclipse.reddeer.eclipse.feature.source.feature.group" version="4.5.0.v20230308-1253"/>
-<unit id="org.eclipse.reddeer.gef.spy.feature.feature.group" version="4.5.0.v20230308-1253"/>
-<unit id="org.eclipse.reddeer.graphiti.feature.feature.group" version="4.5.0.v20230308-1253"/>
-<unit id="org.eclipse.reddeer.graphiti.feature.source.feature.group" version="4.5.0.v20230308-1253"/>
-<unit id="org.eclipse.reddeer.logparser.feature.feature.group" version="4.5.0.v20230308-1253"/>
-<unit id="org.eclipse.reddeer.logparser.feature.source.feature.group" version="4.5.0.v20230308-1253"/>
-<unit id="org.eclipse.reddeer.recorder.feature.feature.group" version="4.5.0.v20230308-1253"/>
-<unit id="org.eclipse.reddeer.recorder.feature.source.feature.group" version="4.5.0.v20230308-1253"/>
-<unit id="org.eclipse.reddeer.spy.feature.feature.group" version="4.5.0.v20230308-1253"/>
-<unit id="org.eclipse.reddeer.swt.feature.feature.group" version="4.5.0.v20230308-1253"/>
-<unit id="org.eclipse.reddeer.swt.feature.source.feature.group" version="4.5.0.v20230308-1253"/>
-<unit id="org.eclipse.reddeer.ui.feature.feature.group" version="4.5.0.v20230308-1253"/>
-<unit id="org.eclipse.reddeer.ui.feature.source.feature.group" version="4.5.0.v20230308-1253"/>
-<repository location="https://download.eclipse.org/reddeer/releases/4.5.0"/>
+<unit id="org.eclipse.reddeer.codegen.feature.feature.group" version="4.6.0.v20230607-1419"/>
+<unit id="org.eclipse.reddeer.eclipse.feature.feature.group" version="4.6.0.v20230607-1419"/>
+<unit id="org.eclipse.reddeer.eclipse.feature.source.feature.group" version="4.6.0.v20230607-1419"/>
+<unit id="org.eclipse.reddeer.gef.spy.feature.feature.group" version="4.6.0.v20230607-1419"/>
+<unit id="org.eclipse.reddeer.graphiti.feature.feature.group" version="4.6.0.v20230607-1419"/>
+<unit id="org.eclipse.reddeer.graphiti.feature.source.feature.group" version="4.6.0.v20230607-1419"/>
+<unit id="org.eclipse.reddeer.logparser.feature.feature.group" version="4.6.0.v20230607-1419"/>
+<unit id="org.eclipse.reddeer.logparser.feature.source.feature.group" version="4.6.0.v20230607-1419"/>
+<unit id="org.eclipse.reddeer.recorder.feature.feature.group" version="4.6.0.v20230607-1419"/>
+<unit id="org.eclipse.reddeer.recorder.feature.source.feature.group" version="4.6.0.v20230607-1419"/>
+<unit id="org.eclipse.reddeer.spy.feature.feature.group" version="4.6.0.v20230607-1419"/>
+<unit id="org.eclipse.reddeer.swt.feature.feature.group" version="4.6.0.v20230607-1419"/>
+<unit id="org.eclipse.reddeer.swt.feature.source.feature.group" version="4.6.0.v20230607-1419"/>
+<unit id="org.eclipse.reddeer.ui.feature.feature.group" version="4.6.0.v20230607-1419"/>
+<unit id="org.eclipse.reddeer.ui.feature.source.feature.group" version="4.6.0.v20230607-1419"/>
+<repository location="https://download.eclipse.org/reddeer/releases/4.6.0"/>
 </location>
 </locations>
 </target>
